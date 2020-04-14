@@ -104,6 +104,11 @@ export default function Repl2() {
             tabSize={4}
             onChange={onChangeMethod}
             style={{ zIndex: 0 }}
+            setOptions={{
+              fontFamily: "'Inconsolata', 'Consolas', monospace",
+              showLineNumbers: false,
+              showGutter: false
+            }}
           />
         </CardContent>
         <CardActions>

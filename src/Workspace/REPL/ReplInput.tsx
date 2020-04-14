@@ -88,7 +88,8 @@ class ReplInput extends React.PureComponent<IReplInputProps, {}> {
           highlightActiveLine={false}
           showGutter={false}
           setOptions={{
-            fontFamily: "'Inconsolata', 'Consolas', monospace"
+            fontFamily: "'Inconsolata', 'Consolas', monospace",
+            showLineNumbers: false
           }}
         />
         <div
