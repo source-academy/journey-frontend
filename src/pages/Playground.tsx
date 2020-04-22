@@ -8,6 +8,11 @@ import { saveState } from "../reducers/localStorage";
 import { Store } from "../reducers/Store";
 import "./Playground.css";
 import Repl2 from "../Workspace/REPL";
+import {
+  FINISH_INVITE, 
+  SET_WEBSOCKET_STATUS
+} from '../reducers/actionTypes';
+
 
 const Playground: React.FC = () => {
   const { globalState, dispatch } = useContext(Store);
@@ -15,11 +20,46 @@ const Playground: React.FC = () => {
   useEffect(() => {
     saveState(globalState);
   });
+
+  // Dispatch collab actions
+
+  const handleEditorValueChange = (newCode: string) => {
+    return dispatch({
+      type: "UPDATE_EDITOR_VALUE",
+      playgroundEditorValue: newCode
+    });
+  }
+
+  const finishInvite =  () => {
+    return dispatch({
+      type: FINISH_INVITE,
+    });
+  }
+
+  const setWebsocketStatus = (websocketStatus: number) => {
+    "action ready to setwebsocket status"
+    return dispatch({
+      type: SET_WEBSOCKET_STATUS,
+      websocketStatus: websocketStatus
+    });
+  }
+
+
+
+
+
   const editorProps = {
     preloadedProg: "",
     callBack: () => {},
-    editorSessionId: "",
-    handleEditorValueChange: () => {},
+    handleEditorValueChange: (newCode: string) => () => handleEditorValueChange(newCode),
+    editorSessionId: globalState.editorSessionId,
+    websocketStatus: globalState.websocketStatus,
+    sharedbAceInitValue: globalState.sharedbAceInitValue,
+    sharedbAceIsInviting: globalState.sharedbAceIsInviting,
+    handleFinishInvite:  () => finishInvite(),
+    handleSetWebsocketStatus: (websocketStatus: number) =>
+    setWebsocketStatus(websocketStatus)
+
   };
   return (
     <>

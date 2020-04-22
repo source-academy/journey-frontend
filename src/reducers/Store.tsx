@@ -20,6 +20,7 @@ const defaultReplValue: string[] = [""];
 
 
 export interface IGlobalState {
+  editorSessionId: string | undefined;
   source: string | undefined;
   library: string | undefined;
   language: string | undefined;
@@ -28,11 +29,13 @@ export interface IGlobalState {
   replComponents: React.ReactElement[];
   eval: boolean | undefined;
   run: boolean | undefined;
-  CollabEditorState: ICollabEditorProps;
-}
+  websocketStatus?: number;
+  sharedbAceInitValue?: string;
+  sharedbAceIsInviting?: boolean;}
 
 // Action Interfaces
 export interface IGlobalAction {
+  editorSessionId: string
   type: String;
   source?: string;
   library?: string;
@@ -42,24 +45,8 @@ export interface IGlobalAction {
   replComponents?: React.ReactElement;
   eval?: boolean;
   runComponent?: React.ReactElement;
-}
-
-
-export interface ICollabAction {
-  type: string;
-  playgroundEditorValue: string;
-  editorSessionId: string;
   websocketStatus: number;
 }
-
-
-// State Interfaces
-export const CollabEditorState: ICollabEditorProps = {
-  editorSessionId: '',
-  sharedbAceInitValue: '',
-  sharedbAceIsInviting: false,
-  websocketStatus: 0,
-};
 
 
 
@@ -72,7 +59,11 @@ const initialState: IGlobalState = {
   replComponents: [],
   eval: false,
   run: false,
-  CollabEditorState: CollabEditorState
+  // collab editing
+  editorSessionId: '',
+  sharedbAceInitValue: '',
+  sharedbAceIsInviting: false,
+  websocketStatus: 0,
 };
 
 
@@ -86,6 +77,12 @@ function reducer(
   action: IGlobalAction
 ): IGlobalState {
   switch (action.type) {
+    case SET_EDITOR_SESSION_ID:
+      console.log("action", action.editorSessionId)
+      return {
+        ...globalState,
+        editorSessionId: action.editorSessionId
+      }
     case "CHANGE_SOURCE":
       return {
         ...globalState,
@@ -138,61 +135,41 @@ function reducer(
         replValue: [""],
         run: true
       };
-    default:
-      throw new Error();
-  }
-}
 
-const CollabReducer = (
-  globalState: IGlobalState,
-  action: ICollabAction
-): IGlobalState => {
-  switch (action.type) {
     case INIT_INVITE:
       return {
         ...globalState,
-        CollabEditorState: {
-          ...globalState.CollabEditorState,
           sharedbAceInitValue: action.playgroundEditorValue,
           sharedbAceIsInviting: true
         }
-      };
-    case FINISH_INVITE:
-      return {
-        ...globalState,
-        CollabEditorState: {
-          ...globalState.CollabEditorState,
-          sharedbAceIsInviting: false
-        }
-      };
-    case SET_EDITOR_SESSION_ID:
-      return {
-        ...globalState,
-        CollabEditorState: {
-          ...globalState.CollabEditorState,
-          editorSessionId: action.editorSessionId
-        }
-      };
-    
-      case SET_WEBSOCKET_STATUS:
+      case FINISH_INVITE:
+        console.log("STOP invite")
         return {
           ...globalState,
-          CollabEditorState: {
-            ...globalState.CollabEditorState,
+            sharedbAceIsInviting: false
+          }
+          case SET_EDITOR_SESSION_ID:
+            return {
+              ...globalState,
+                editorSessionId: action.editorSessionId
+              }
+ case SET_WEBSOCKET_STATUS:
+        return {
+          ...globalState,
             websocketStatus: action.websocketStatus
           }
-        };
-
 
     default:
       throw new Error();
   }
 }
 
+
 export function StoreProvider(props: any): JSX.Element {
   const [globalState, dispatch] = React.useReducer(reducer, initialState);
+
   return (
-    <Store.Provider value={{ globalState, dispatch }}>
+    <Store.Provider value={{ globalState, dispatch}}>
       {props.children}
     </Store.Provider>
   );

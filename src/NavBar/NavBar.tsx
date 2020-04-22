@@ -6,6 +6,7 @@ import DehazeIcon from "@material-ui/icons/Dehaze";
 import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
 import { SideBarContext, IAction } from "./SideBarContext";
 import SourceDropDown from "./SourceDropDown";
+import SessionControl from "./SessionControl";
 import RunButton from "./RunButton";
 import PhoneRunButton from "./PhoneRunButton";
 
@@ -67,28 +68,28 @@ const NavBar: React.FC = () => {
                 <img src="/images/logo.png" className="navBar_logo" />
               </div>
 
-              <div className="navBar_navigation-items">
-                <ul>
-                  <li>
-                    <SourceDropDown
-                      dropDownType="CHANGE_SOURCE"
-                      options={sourceOptions}
-                      sideBarString={"source"}
-                    />
-                  </li>
-                  <li>
-                    <SourceDropDown
-                      dropDownType="CHANGE_LIBRARY"
-                      options={libraryOptions}
-                      sideBarString={"library"}
-                    />
-                  </li>
-                  <li>
-                    <a href="/">Session</a>
-                  </li>
-                  <li>
-                    <a href="/">Share</a>
-                  </li>
+                <div className="navBar_navigation-items">
+                  <ul>
+                    <li>
+                      <SourceDropDown
+                        dropDownType="CHANGE_SOURCE"
+                        options={sourceOptions}
+                        sideBarString={"source"}
+                      />
+                    </li>
+                    <li>
+                      <SourceDropDown
+                        dropDownType="CHANGE_LIBRARY"
+                        options={libraryOptions}
+                        sideBarString={"library"}
+                      />
+                    </li>
+                    <li>
+                      <SessionControl/>
+                    </li>
+                    <li>
+                      <a href="/">Share</a>
+                    </li>
 
                   <li>
                     <a>

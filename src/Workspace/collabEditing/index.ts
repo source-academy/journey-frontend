@@ -19,6 +19,7 @@ export function checkSessionIdExists(
   handleSessionIdNotFound: () => void,
   handleCannotReachServer: () => void
 ) {
+  console.log("checksessionidexists")
   const xmlhttp = new XMLHttpRequest();
   xmlhttp.onreadystatechange = () => {
     if (xmlhttp.readyState !== XMLHttpReadyState.DONE) {
@@ -44,6 +45,7 @@ export function createNewSession(onSessionCreated: (sessionId: string) => void) 
   xmlhttp.onreadystatechange = () => {
     if (xmlhttp.readyState === XMLHttpReadyState.DONE && xmlhttp.status === XMLHttpStatus.OK) {
       const id: string = JSON.parse(xmlhttp.responseText).id;
+      console.log(id);
       onSessionCreated(id);
     }
   };

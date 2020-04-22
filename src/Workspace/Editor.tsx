@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import sharedbAce from 'sharedb-ace';
 import AceEditor from "react-ace";
 import { LINKS } from '../utils/constants';
@@ -11,10 +11,6 @@ import { IGlobalAction, Store } from "../reducers/Store";
 export interface IEditorProps extends IMainEditorProps, ICollabEditorProps {}
     
 export interface ICollabEditorProps {
-  editorSessionId: string;
-  websocketStatus?: number;
-  sharedbAceInitValue?: string;
-  sharedbAceIsInviting?: boolean;
   handleFinishInvite?: () => void;
   handleSetWebsocketStatus?: (websocketStatus: number) => void;
   handleUpdateHasUnsavedChanges?: (hasUnsavedChanges: boolean) => void
@@ -32,38 +28,37 @@ function Editor(props: IEditorProps) {
   const { globalState, dispatch } = useContext(Store);
   const aceEditor: React.RefObject<AceEditor> = React.createRef();;
   let ShareAce: any = null;
-
+  const mounted = useRef();
   const onChangeMethod = (newCode: string) => {
-    return dispatch({
-      type: "UPDATE_EDITOR_VALUE",
-      playgroundEditorValue: newCode
-    });
-  }
+    props.handleEditorValueChange(newCode);
+  };
+
   
   React.useEffect(() => {
       if (!aceEditor.current) {
         return;
       }
       const editor = (aceEditor.current as any).editor;
-      const session = editor.getSession();
       // Has session ID
-      if (props.editorSessionId !== '') {
-        handleStartCollabEditing(editor);
-      }
-    }
-  )
-
-  React.useEffect(() => {
-    if (ShareAce !== null) {
-        // Umounting... Closing websocket
+      if (globalState.editorSessionId !== '') {
+         handleStartCollabEditing(editor);
+      } else if(globalState.editorSessionId === '' && ShareAce !== null) {
+        // close port
         ShareAce.WS.close();
+      }
+      return () => {
+        if (ShareAce !== null) {
+            // Umounting... Closing websocket
+            ShareAce.WS.close();
+        }
+        ShareAce = null;
+        }
     }
-    ShareAce = null;
-    }
-  )
+  ,[globalState.editorSessionId])
 
   const handleStartCollabEditing = (editor: any) => {
-    const ShareAce = new sharedbAce(props.editorSessionId!, {
+    console.log("start collab editing")
+    const ShareAce = new sharedbAce(globalState.editorSessionId!, {
       WsUrl: 'wss://' + LINKS.SHAREDB_SERVER + 'ws/',
       pluginWsUrl: null,
       namespace: 'codepad'
@@ -77,8 +72,9 @@ function Editor(props: IEditorProps) {
           // SharedbAceMultipleCursors
         ]
       );
-      if (props.sharedbAceIsInviting) {
-        props.handleEditorValueChange(props.sharedbAceInitValue!);
+      if (globalState.sharedbAceIsInviting) {
+        console.log("editor is inviting")
+        props.handleEditorValueChange(globalState.sharedbAceInitValue!);
         props.handleFinishInvite!();
       }
     });
@@ -98,7 +94,7 @@ function Editor(props: IEditorProps) {
         return;
       }
       checkSessionIdExists(
-        props.editorSessionId,
+        globalState.editorSessionId,
         () => {},
         sessionIdNotFound,
         cannotReachServer
@@ -111,6 +107,7 @@ function Editor(props: IEditorProps) {
       props.handleSetWebsocketStatus!(1);
     });
     WS.addEventListener('close', (event: Event) => {
+      console.log('port close by event listenr')
       props.handleSetWebsocketStatus!(0);
     });
   };
