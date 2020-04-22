@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import "./workspace.css";
+import { Store, IGlobalAction } from "../reducers/Store";
 
 export interface IWorkspaceProps {
   repl: React.ReactElement;
@@ -20,8 +21,10 @@ export default function WorkspaceCom(props: IWorkspaceProps) {
     runState: false,
     editorInput: "", // initially named code
     leftPanelWidth: 50,
-    rightPanelWidth: 50
+    rightPanelWidth: 50,
   });
+
+  const { globalState, dispatch } = useContext(Store);
 
   const phoneBreakpoint = 800;
   const inPhoneMode = useMediaQuery(`(max-width:${phoneBreakpoint}px)`);
@@ -30,13 +33,13 @@ export default function WorkspaceCom(props: IWorkspaceProps) {
       setState({
         ...state,
         leftPanelWidth: 100,
-        rightPanelWidth: 100
+        rightPanelWidth: 100,
       });
     } else {
       setState({
         ...state,
         leftPanelWidth: 50,
-        rightPanelWidth: 50
+        rightPanelWidth: 50,
       });
     }
   }, [inPhoneMode]);
@@ -44,21 +47,21 @@ export default function WorkspaceCom(props: IWorkspaceProps) {
   const callBackFromRepl = () => {
     setState({
       ...state,
-      runState: true
+      runState: true,
     });
   };
 
   const callBackFromReplStop = () => {
     setState({
       ...state,
-      runState: true
+      runState: true,
     });
   };
 
   const callBackFromEditor = (childData: string) => {
     setState({
       ...state,
-      editorInput: childData
+      editorInput: childData,
     });
   };
 
@@ -73,7 +76,7 @@ export default function WorkspaceCom(props: IWorkspaceProps) {
       setState({
         ...state,
         leftPanelWidth: (e.clientX * 100) / window.innerWidth,
-        rightPanelWidth: 100 - (e.clientX * 100) / window.innerWidth
+        rightPanelWidth: 100 - (e.clientX * 100) / window.innerWidth,
       });
     }
   };
@@ -92,8 +95,8 @@ export default function WorkspaceCom(props: IWorkspaceProps) {
         <div className="resizer" onMouseDown={handleResize}></div>
       </div>
       <div style={{ width: `${state.rightPanelWidth}vw` }}>
-        {props.repl}
         {props.question}
+        {globalState.useStepper ? <div></div> : props.repl}
       </div>
     </div>
   );

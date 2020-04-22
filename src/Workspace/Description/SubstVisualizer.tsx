@@ -2,8 +2,8 @@ import Card from "@material-ui/core/Card";
 import Divider from "@material-ui/core/Divider";
 import Slider from "@material-ui/core/Slider";
 import CardContent from "@material-ui/core/CardContent";
-
-import * as React from "react";
+import { Store, IGlobalAction } from "../../reducers/Store";
+import React, { useContext, ReactElement } from "react";
 
 export interface ISubstVisualizerProps {
   content: string[];
@@ -53,22 +53,15 @@ const SubstCodeDisplay = (props: { content: string }) => {
   );
 };
 
-class SubstVisualizer extends React.Component<
-  ISubstVisualizerProps,
-  ISubstVisualizerState
-> {
-  constructor(props: ISubstVisualizerProps) {
-    super(props);
-    this.state = {
-      value: 1
-    };
-  }
+const SubstVisualizer: React.FC<ISubstVisualizerProps> = (props) => {
+  {
+    const { globalState, dispatch } = useContext(Store);
+    const [step, setStep] = React.useState<number[]>([1]);
 
-  public render() {
-    const lastStepValue = this.props.content.length;
+    //const lastStepValue = this.props.content.length;
     // 'content' property is initialised to '[]' by Playground component
-    const hasRunCode = lastStepValue !== 0;
-    const substHandlers = hasRunCode
+    //const hasRunCode = lastStepValue !== 0;
+    /*const substHandlers = hasRunCode
       ? {
           FIRST_STEP: this.stepFirst,
           LAST_STEP: this.stepLast(lastStepValue)
@@ -76,44 +69,55 @@ class SubstVisualizer extends React.Component<
       : {
           FIRST_STEP: () => {},
           LAST_STEP: () => {}
-        };
-    const handleChange = (event: any, newValue: number | number[]) => {};
+        };*/
+    const handleChange = (event: any, newValue: number | number[]) => {
+      console.log(newValue);
+      setStep(newValue as number[]);
+    };
 
     return (
       <div>
-        <div>
+        {
           <Slider
-            value={this.state.value <= lastStepValue ? this.state.value : 1}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
-            step={10}
             marks
-            min={1}
-            max={this.props.content.length}
-            disabled={!hasRunCode}
+            value={step}
             onChange={handleChange}
+            min={1}
+            max={
+              globalState.stepperComponents == undefined
+                ? 1
+                : globalState.stepperComponents.length
+            }
           />
-          )}
-        </div>
+        }
+        <div>{globalState.stepperComponents[step[0] - 1]}</div>
+        {console.log(globalState.stepperComponents[0])}
+        {globalState.stepperComponents[0] === undefined ? (
+          SubstDefaultText()
+        ) : (
+          <div></div>
+        )}
       </div>
     );
   }
 
-  private sliderShift = (newValue: number) => {
+  /*const sliderShift = (newValue: number) => {
     this.setState((state: ISubstVisualizerState) => {
       return { value: newValue };
     });
   };
 
-  private stepFirst = () => {
+  const stepFirst = () => {
     // Move to the first step
     this.sliderShift(1);
   };
 
-  private stepLast = (lastStepValue: number) => () => {
+  const stepLast = (lastStepValue: number) => () => {
     // Move to the last step
     this.sliderShift(lastStepValue);
-  };
-}
+  };*/
+};
 
 export default SubstVisualizer;

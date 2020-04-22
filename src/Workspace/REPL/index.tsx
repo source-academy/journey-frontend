@@ -6,8 +6,8 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import AceEditor from "react-ace";
 
-import { IGlobalAction, Store } from "../../reducers/Store";
-import EvalButton from "../EvalButton";
+import { Store } from "../../reducers/Store";
+import EvalButton from "./EvalButton";
 
 import "ace-builds/src-noconflict/mode-javascript"; // replace with mode source in the future
 import "ace-builds/src-noconflict/theme-tomorrow";
@@ -21,18 +21,18 @@ const useStyles = makeStyles({
   bullet: {
     display: "inline-block",
     margin: "0 2px",
-    transform: "scale(0.8)"
+    transform: "scale(0.8)",
   },
   title: {
-    fontSize: 14
+    fontSize: 14,
   },
   pos: {
-    marginBottom: 12
-  }
+    marginBottom: 12,
+  },
 });
 
 export default function Repl2() {
-  const { globalState, dispatch } = useContext(Store);
+  const { globalState } = useContext(Store);
   const [code, setCode] = React.useState("");
   function onChangeMethod(newCode: string) {
     setCode(newCode);

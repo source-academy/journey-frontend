@@ -16,6 +16,8 @@ export interface IGlobalState {
   replComponents: React.ReactElement[];
   eval: boolean | undefined;
   run: boolean | undefined;
+  useStepper: boolean | undefined;
+  stepperComponents: React.ReactElement[] | undefined;
 }
 
 export interface IGlobalAction {
@@ -28,6 +30,7 @@ export interface IGlobalAction {
   replComponents?: React.ReactElement;
   eval?: boolean;
   runComponent?: React.ReactElement;
+  stepperComponents?: React.ReactElement[];
 }
 
 const initialState: IGlobalState = {
@@ -38,7 +41,9 @@ const initialState: IGlobalState = {
   replValue: defaultReplValue,
   replComponents: [],
   eval: false,
-  run: false
+  run: false,
+  useStepper: false,
+  stepperComponents: [],
 };
 
 export const Store = createContext<IGlobalState | any>(initialState);
@@ -51,22 +56,22 @@ function reducer(
     case "CHANGE_SOURCE":
       return {
         ...globalState,
-        source: action.source
+        source: action.source,
       };
     case "CHANGE_LIBRARY":
       return {
         ...globalState,
-        library: action.library
+        library: action.library,
       };
     case "CHANGE_LANGUAGE":
       return {
         ...globalState,
-        language: action.language
+        language: action.language,
       };
     case "UPDATE_EDITOR_VALUE":
       return {
         ...globalState,
-        playgroundEditorValue: action.playgroundEditorValue
+        playgroundEditorValue: action.playgroundEditorValue,
       };
     case "UPDATE_AND_EVAL":
       var l: number = globalState.replValue.length;
@@ -76,7 +81,7 @@ function reducer(
       return {
         ...globalState,
         replValue: globalState.replValue,
-        eval: true
+        eval: true,
       };
     case "RUN_EVAL":
       const component: React.ReactElement =
@@ -89,7 +94,7 @@ function reducer(
       return {
         ...globalState,
         replComponents: globalState.replComponents,
-        eval: false
+        eval: false,
       };
     case "RUN":
       const newComponent: React.ReactElement =
@@ -98,7 +103,22 @@ function reducer(
         ...globalState,
         replComponents: [newComponent],
         replValue: [""],
-        run: true
+        run: true,
+      };
+    case "TOGGLESTEPPER":
+      return {
+        ...globalState,
+        useStepper: true,
+      };
+    case "CLOSESTEPPER":
+      return {
+        ...globalState,
+        useStepper: false,
+      };
+    case "RUNSTEPPER":
+      return {
+        ...globalState,
+        stepperComponents: action.stepperComponents,
       };
     default:
       throw new Error();

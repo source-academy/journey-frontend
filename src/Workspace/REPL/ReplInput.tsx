@@ -61,26 +61,26 @@ class ReplInput extends React.PureComponent<IReplInputProps, {}> {
               name: "browseHistoryDown",
               bindKey: {
                 win: "Down",
-                mac: "Down"
+                mac: "Down",
               },
-              exec: this.execBrowseHistoryDown
+              exec: this.execBrowseHistoryDown,
             },
             {
               name: "browseHistoryUp",
               bindKey: {
                 win: "Up",
-                mac: "Up"
+                mac: "Up",
               },
-              exec: this.execBrowseHistoryUp
+              exec: this.execBrowseHistoryUp,
             },
             {
               name: "evaluate",
               bindKey: {
                 win: "Shift-Enter",
-                mac: "Shift-Enter"
+                mac: "Shift-Enter",
               },
-              exec: this.execEvaluate
-            }
+              exec: this.execEvaluate,
+            },
           ]}
           minLines={1}
           maxLines={20}
@@ -94,7 +94,7 @@ class ReplInput extends React.PureComponent<IReplInputProps, {}> {
         />
         <div
           className="replInputBottom"
-          ref={e => (this.replInputBottom = e!)}
+          ref={(e) => (this.replInputBottom = e!)}
         />
       </>
     );

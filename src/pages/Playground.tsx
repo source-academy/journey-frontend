@@ -8,11 +8,7 @@ import { saveState } from "../reducers/localStorage";
 import { Store } from "../reducers/Store";
 import "./Playground.css";
 import Repl2 from "../Workspace/REPL";
-import {
-  FINISH_INVITE, 
-  SET_WEBSOCKET_STATUS
-} from '../reducers/actionTypes';
-
+import { FINISH_INVITE, SET_WEBSOCKET_STATUS } from "../reducers/actionTypes";
 
 const Playground: React.FC = () => {
   const { globalState, dispatch } = useContext(Store);
@@ -26,49 +22,55 @@ const Playground: React.FC = () => {
   const handleEditorValueChange = (newCode: string) => {
     return dispatch({
       type: "UPDATE_EDITOR_VALUE",
-      playgroundEditorValue: newCode
+      playgroundEditorValue: newCode,
     });
-  }
+  };
 
-  const finishInvite =  () => {
+  const finishInvite = () => {
     return dispatch({
       type: FINISH_INVITE,
     });
-  }
+  };
 
   const setWebsocketStatus = (websocketStatus: number) => {
-    "action ready to setwebsocket status"
+    "action ready to setwebsocket status";
     return dispatch({
       type: SET_WEBSOCKET_STATUS,
-      websocketStatus: websocketStatus
+      websocketStatus: websocketStatus,
     });
-  }
-
-
-
-
+  };
 
   const editorProps = {
     preloadedProg: "",
     callBack: () => {},
-    handleEditorValueChange: (newCode: string) => () => handleEditorValueChange(newCode),
+    handleEditorValueChange: (newCode: string) => () =>
+      handleEditorValueChange(newCode),
     editorSessionId: globalState.editorSessionId,
     websocketStatus: globalState.websocketStatus,
     sharedbAceInitValue: globalState.sharedbAceInitValue,
     sharedbAceIsInviting: globalState.sharedbAceIsInviting,
-    handleFinishInvite:  () => finishInvite(),
+    handleFinishInvite: () => finishInvite(),
     handleSetWebsocketStatus: (websocketStatus: number) =>
-    setWebsocketStatus(websocketStatus)
-
+      setWebsocketStatus(websocketStatus),
   };
   return (
     <>
       <CompleteNavBar />
-        <Workspace
+      {/* <div className="playgroundPhone"> */}
+      <Workspace
+        editor={<Editor {...editorProps} />}
+        question={<Description />}
+        repl={<Repl2 />}
+        // bottomBar={<BottomBar />}
+      />
+      {/* </div> */}
+      {/* <div className="playgroundComputer">
+        <WorkspaceCom
           editor={<Editor {...editorProps} />}
-          question={<Description />}
-          repl={<Repl2 />}
-        />
+          repl={<Description />}
+          question={<Repl2 />}
+
+  />*/}
     </>
   );
 };

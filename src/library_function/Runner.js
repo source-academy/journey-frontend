@@ -1,6 +1,6 @@
 import React, { Component, useContext } from "react";
 import ReactDOM from "react-dom";
-import { stringify } from "js-slang/dist/interop";
+import { stringify } from "js-slang/dist/utils/stringify";
 // const HtmlToReactParser = require('html-to-react').Parser;
 
 class Runner extends Component {

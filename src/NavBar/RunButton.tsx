@@ -8,24 +8,25 @@ import { Result } from "js-slang/dist/types";
 import { TypeError } from "js-slang/dist/utils/rttc";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import { getEvaluationSteps, codify } from "js-slang/dist/stepper/stepper";
 
 import "./NavBar.css";
+import { stringify } from "querystring";
 
 /**
  * States
  */
 
-const context: Context = createContext(4);
-
 const RunButton: React.FC = () => {
   const { globalState, dispatch } = useContext(Store);
+  const context: Context = createContext(globalState.source);
 
   //runInContext takes in (string code, context, {})
   const evaluate = async () => {
     return await runInContext(globalState.playgroundEditorValue, context, {
       scheduler: "preemptive",
       originalMaxExecTime: 2000,
-      useSubst: false
+      useSubst: globalState.useStepper,
     });
   };
   const handleRun = async () => {
@@ -36,12 +37,22 @@ const RunButton: React.FC = () => {
         <Card>
           <CardContent>
             <div style={{ color: "red" }}>
-              {context.errors.map(x => x.explain()).reduce((x, y) => x + y)}
+              {context.errors.map((x) => x.explain()).reduce((x, y) => x + y)}
             </div>
           </CardContent>
         </Card>
       );
     } else if (result.status === "finished") {
+      if (globalState.useStepper) {
+        const stepperComponents: React.ReactElement[] = result.value.map(
+          (x: any) => <div>{codify(x)}</div>
+        );
+        console.log(stepperComponents);
+        return dispatch({
+          type: "RUNSTEPPER",
+          stepperComponents: stepperComponents,
+        });
+      }
       newComponent = <Runner value={result.value} />;
     } else {
       newComponent = <div></div>;
@@ -49,7 +60,7 @@ const RunButton: React.FC = () => {
 
     return dispatch({
       type: "RUN",
-      runComponent: newComponent
+      runComponent: newComponent,
     });
   };
   return (
