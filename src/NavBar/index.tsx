@@ -19,7 +19,7 @@ const CompleteNavBar: React.FC<completeNavBarProps> = completeNavBarProps => {
   }
 
   return (
-    <div style={{zIndex : 2}}>
+    <div style={{zIndex : 2, height: 50}}>
       <NavBar/>
       {sideBar}
     </div>

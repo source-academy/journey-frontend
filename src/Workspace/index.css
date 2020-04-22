@@ -39,11 +39,10 @@
   display: flex;
   flex: 1;
   flex-direction: row;
-  padding: 50px 0 0;
 }
 
 .right-panel {
-  flex: 1
+  flex: 1;
 }
 
 .resizer {
@@ -67,9 +66,9 @@
     flex-direction: column;
   } */
 
-  /* .left-panel {
+  .left-panel {
     flex-direction: column;
-  } */
+  }
 
   /* .right-panel {
     width: 100vw;

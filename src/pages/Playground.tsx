@@ -22,24 +22,14 @@ const Playground: React.FC = () => {
     handleEditorValueChange: () => {},
   };
   return (
-    <div>
+    <>
       <CompleteNavBar />
-      {/* <div className="playgroundPhone"> */}
         <Workspace
           editor={<Editor {...editorProps} />}
-          repl={<Description />}
-          question={<Repl2 />}
-          // bottomBar={<BottomBar />}
+          question={<Description />}
+          repl={<Repl2 />}
         />
-      {/* </div> */}
-      {/* <div className="playgroundComputer">
-        <WorkspaceCom
-          editor={<Editor {...editorProps} />}
-          repl={<Description />}
-          question={<Repl2 />}
-        />
-      </div> */}
-    </div>
+    </>
   );
 };
 

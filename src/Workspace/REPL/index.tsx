@@ -14,7 +14,9 @@ import "ace-builds/src-noconflict/theme-tomorrow";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275
+    minWidth: 275,
+    padding: "5px 10px",
+    margin: 0,
   },
   bullet: {
     display: "inline-block",
@@ -37,42 +39,34 @@ export default function Repl2() {
   }
   const classes = useStyles();
 
-  const runComponent = (
-    <div>
-      <Card className={classes.root}>
-        <CardContent>
-          {
-            globalState.replComponents.filter(
-              (component: React.ReactNode) => component !== <div></div>
-            )[0]
-          }
-        </CardContent>
-      </Card>
-    </div>
+  const runComponent =  (
+    <Card className={classes.root}>
+      <CardContent>
+        {
+          globalState.replComponents.filter(
+            (component: React.ReactNode) => component !== <div></div>
+          )[0]
+        }
+      </CardContent>
+    </Card>
   );
 
   const componentList = (
-    <div>
+    <div style={{overflow: "scroll", maxHeight: "40vh"}}>
       {globalState.replValue
         .filter((element: React.ReactNode) => element !== "")
         .map((component: React.ReactNode, i: number) => {
           return (
-            <div>
+            <>
               <Card className={classes.root}>
-                <CardContent>
-                  <Typography variant="body2" component="p">
-                    {component}
-                  </Typography>
-                </CardContent>
+                {component}
               </Card>
               <Card className={classes.root}>
-                <CardContent>
-                  {globalState.run
-                    ? globalState.replComponents[i + 1]
-                    : globalState.replComponents[i]}
-                </CardContent>
+                {globalState.run
+                  ? globalState.replComponents[i + 1]
+                  : globalState.replComponents[i]}
               </Card>
-            </div>
+            </>
           );
         })}
     </div>
@@ -80,16 +74,12 @@ export default function Repl2() {
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <div>
-      {globalState.run ? (
-        globalState.replComponents[0] !== undefined ? (
-          runComponent
-        ) : (
-          <div></div>
-        )
-      ) : (
-        <div></div>
-      )}
+    <div style={{maxHeight: "50vh", overflowY: "scroll"}}>
+      {
+        globalState.run && 
+        globalState.replComponents[0] !== undefined && 
+        runComponent
+      }
       {componentList}
       <Card className={classes.root}>
         <CardContent>
@@ -99,7 +89,7 @@ export default function Repl2() {
             theme="future"
             height="5vh"
             width="inherit"
-            fontSize="17"
+            fontSize={14}
             value={globalState.eval ? "" : code}
             tabSize={4}
             onChange={onChangeMethod}

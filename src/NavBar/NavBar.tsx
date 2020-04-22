@@ -37,78 +37,76 @@ const NavBar: React.FC = () => {
     
 
   return (
-    <div style={{ zIndex: 1 }}>
-      <header className="navBar">
-        <nav className="navBar_navigation">
-          <Grid container justify="space-between" spacing={2}>
-            <Grid item>
-              <div className="toggleButton">
-                <IconButton onClick={toggleButton} edge="start">
-                  <DehazeIcon
-                    style={{
-                      color: "white",
-                      height: "45px",
-                      display: state.sideDrawerState ? "none" : "flex"
-                    }}
-                  />
-                  <ClearIcon
-                    style={{
-                      color: "white",
-                      height: "45px",
-                      alignSelf: "flex-start",
-                      display: state.sideDrawerState ? "flex" : "none"
-                    }}
-                  />
-                </IconButton>
-              </div>
-            </Grid>
-            <Grid item>
-              <div className="listPlusLogo">
-                <div>
-                  <img src="/images/logo.png" className="navBar_logo" />
-                </div>
-
-                <div className="navBar_navigation-items">
-                  <ul>
-                    <li>
-                      <SourceDropDown
-                        dropDownType="CHANGE_SOURCE"
-                        options={sourceOptions}
-                        sideBarString={"source"}
-                      />
-                    </li>
-                    <li>
-                      <SourceDropDown
-                        dropDownType="CHANGE_LIBRARY"
-                        options={libraryOptions}
-                        sideBarString={"library"}
-                      />
-                    </li>
-                    <li>
-                      <a href="/">Session</a>
-                    </li>
-                    <li>
-                      <a href="/">Share</a>
-                    </li>
-
-                    <li>
-                      <a>
-                        <RunButton />
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </Grid>
-            <Grid item>
-              <div className="playButton">
-                <PhoneRunButton />
-              </div>
-            </Grid>
+    <header className="navBar">
+      <nav className="navBar_navigation">
+        <Grid container justify="space-between" spacing={2}>
+          <Grid item>
+            <div className="toggleButton">
+              <IconButton onClick={toggleButton} edge="start">
+                <DehazeIcon
+                  style={{
+                    color: "white",
+                    height: "45px",
+                    display: state.sideDrawerState ? "none" : "flex"
+                  }}
+                />
+                <ClearIcon
+                  style={{
+                    color: "white",
+                    height: "45px",
+                    alignSelf: "flex-start",
+                    display: state.sideDrawerState ? "flex" : "none"
+                  }}
+                />
+              </IconButton>
+            </div>
           </Grid>
-        </nav>
-      </header>
-    </div>
+          <Grid item>
+            <div className="listPlusLogo">
+              <div>
+                <img src="/images/logo.png" className="navBar_logo" />
+              </div>
+
+              <div className="navBar_navigation-items">
+                <ul>
+                  <li>
+                    <SourceDropDown
+                      dropDownType="CHANGE_SOURCE"
+                      options={sourceOptions}
+                      sideBarString={"source"}
+                    />
+                  </li>
+                  <li>
+                    <SourceDropDown
+                      dropDownType="CHANGE_LIBRARY"
+                      options={libraryOptions}
+                      sideBarString={"library"}
+                    />
+                  </li>
+                  <li>
+                    <a href="/">Session</a>
+                  </li>
+                  <li>
+                    <a href="/">Share</a>
+                  </li>
+
+                  <li>
+                    <a>
+                      <RunButton />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </Grid>
+          <Grid item>
+            <div className="playButton">
+              <PhoneRunButton />
+            </div>
+          </Grid>
+        </Grid>
+      </nav>
+    </header>
   );
 };
 

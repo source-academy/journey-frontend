@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { Store, IGlobalAction } from "../reducers/Store"
-import Runner from "./../library_function/Runner";
 import IconButton from "@material-ui/core/IconButton";
-
 import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
+import Link from "@material-ui/core/Link";
 
+import Runner from "./../library_function/Runner";
 import "./NavBar.css";
 
 /**
@@ -23,7 +23,7 @@ const RunButton: React.FC = () => {
     });
   };
   return (
-    <div>
+    <Link href="#repl">
       <IconButton onClick={handleRun}>
         <DirectionsRunIcon
           style={{
@@ -32,7 +32,7 @@ const RunButton: React.FC = () => {
           }}
         />
       </IconButton>
-    </div>
+    </Link>
   );
 };
 

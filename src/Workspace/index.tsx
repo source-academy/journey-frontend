@@ -82,34 +82,27 @@ export default function(props: IWorkspaceProps){
   return inPhoneMode 
   ? (
     <>
-    <div className="root">
-      <div className="root-mobile">
-        <div className="right-panel">
-          {React.cloneElement(props.repl, {
-            callBack: callBackFromRepl,
-            runState: state.runState,
-            editorInput: state.editorInput,
-            callBackStop: callBackFromReplStop
-          })}
-          {props.question}
-        </div>
-        <div className="left-panel">
-          {React.cloneElement(props.editor, {
-            callBack: callBackFromEditor,
-          })}
-        </div>
-        <div className="right-panel">
-          {React.cloneElement(props.repl, {
-            callBack: callBackFromRepl,
-            runState: state.runState,
-            editorInput: state.editorInput,
-            callBackStop: callBackFromReplStop
-          })}
-          {props.question}
+      <div className="root">
+        <div className="root-mobile">
+          <div id="question" className="right-panel">
+            {props.question}
+          </div>
+          <div id="main-editor" className="left-panel">
+            {React.cloneElement(props.editor, {
+              callBack: callBackFromEditor,
+            })}
+          </div>
+          <div id="repl" className="right-panel">
+            {React.cloneElement(props.repl, {
+              callBack: callBackFromRepl,
+              runState: state.runState,
+              editorInput: state.editorInput,
+              callBackStop: callBackFromReplStop
+            })}
+          </div>
         </div>
       </div>
-    </div>
-    <BottomBar />
+      <BottomBar />
     </>
   ) : (
     <div className={clsx('root', isResizing && 'is-resizing')}>
@@ -120,13 +113,14 @@ export default function(props: IWorkspaceProps){
         <div className="resizer" onMouseDown={handleResize}></div>
       </div>
       <div className="right-panel" style={{width: `${style.rightPanelWidth}vw`}}>
+        {props.question}
+        <div style={{height: 5}} />
         {React.cloneElement(props.repl, {
           callBack: callBackFromRepl,
           runState: state.runState,
           editorInput: state.editorInput,
           callBackStop: callBackFromReplStop
         })}
-        {props.question}
       </div>
     </div>
   );

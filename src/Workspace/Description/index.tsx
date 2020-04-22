@@ -19,7 +19,8 @@ import TabStyle from "./TabStyle";
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-    paddingTop: "45px"
+    maxHeight: "80vh",
+    overflowY: "scroll",
   },
   bullet: {
     display: "inline-block",

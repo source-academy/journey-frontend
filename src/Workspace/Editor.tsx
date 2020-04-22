@@ -119,28 +119,30 @@ function Editor(props: IEditorProps) {
   
   return (
     <AceEditor
-    className="react-ace"
-    mode="javascript"
-    theme="black"
-    height="90vh"
-    width="inherit"
-    ref={aceEditor}
-    editorProps={{
-      $blockScrolling: Infinity
-    }}
-    fontSize={16}
-    highlightActiveLine={false}
-    tabSize={4}
-    value={globalState.playgroundEditorValue}
-    onChange={onChangeMethod}
-    style={{ zIndex: 0 }}
-    setOptions={{
-      fontFamily: "'Inconsolata', 'Consolas', monospace",
-      enableBasicAutocompletion: true,
-      enableLiveAutocompletion: true,
-      enableSnippets: true
-    }}
-  />);
+      className="react-ace"
+      mode="javascript"
+      theme="black"
+      height="90vh"
+      width="inherit"
+      ref={aceEditor}
+      editorProps={{
+        $blockScrolling: Infinity
+      }}
+      debounceChangePeriod={200}
+      fontSize={16}
+      highlightActiveLine={false}
+      tabSize={4}
+      value={globalState.playgroundEditorValue}
+      onChange={onChangeMethod}
+      style={{ zIndex: 0 }}
+      setOptions={{
+        fontFamily: "'Inconsolata', 'Consolas', monospace",
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: true,
+        enableSnippets: true
+      }}
+    />
+  );
 
 }
 
