@@ -1,4 +1,4 @@
-import React, { Component, useContext } from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { stringify } from "js-slang/dist/utils/stringify";
 // const HtmlToReactParser = require('html-to-react').Parser;
@@ -22,6 +22,7 @@ class Runner extends Component {
       this.canvas = this.props.value.$canvas;
       return <div></div>;
     } else {
+      console.log(window.body);
       return <p>{stringify(this.props.value)}</p>;
     }
   }

@@ -22,12 +22,7 @@ export interface IWorkspaceStyleState {
 }
 
 export default function (props: IWorkspaceProps) {
-  const { globalState, dispatch } = useContext(Store);
-
-  let [state, setState]: [IWorkspaceState, Function] = React.useState({
-    runState: false,
-    editorInput: "", // initially named code
-  });
+  const { globalState } = useContext(Store);
 
   let [style, setStyle]: [IWorkspaceStyleState, Function] = React.useState({
     leftPanelWidth: 50,
@@ -38,27 +33,6 @@ export default function (props: IWorkspaceProps) {
 
   const phoneBreakpoint = 800;
   const inPhoneMode = useMediaQuery(`(max-width:${phoneBreakpoint}px)`);
-
-  const callBackFromRepl = () => {
-    setState({
-      ...state,
-      runState: true,
-    });
-  };
-
-  const callBackFromReplStop = () => {
-    setState({
-      ...state,
-      runState: true,
-    });
-  };
-
-  const callBackFromEditor = (childData: string) => {
-    setState({
-      ...state,
-      editorInput: childData,
-    });
-  };
 
   const handleResize = () => {
     window.addEventListener("mousemove", resize);
@@ -86,24 +60,15 @@ export default function (props: IWorkspaceProps) {
     <>
       <div className="root">
         <div className="root-mobile">
+          <div id="main-editor" className="right-panel">
+            {props.editor}
+          </div>
+          <div id="repl" className="left-panel">
+            {props.repl}
+          </div>
+
           <div id="question" className="right-panel">
             {props.question}
-          </div>
-          <div id="main-editor" className="left-panel">
-            {React.cloneElement(props.editor, {
-              callBack: callBackFromEditor,
-            })}
-          </div>
-
-          <div id="repl" className="right-panel">
-            {React.cloneElement(props.repl, {
-              callBack: callBackFromRepl,
-              runState: state.runState,
-              editorInput: state.editorInput,
-              callBackStop: callBackFromReplStop,
-            })}
-            {props.question}
-
           </div>
         </div>
       </div>
@@ -115,9 +80,7 @@ export default function (props: IWorkspaceProps) {
         className="left-panel"
         style={{ width: `${style.leftPanelWidth}vw` }}
       >
-        {React.cloneElement(props.editor, {
-          callBack: callBackFromEditor,
-        })}
+        {props.editor}
         <div className="resizer" onMouseDown={handleResize}></div>
       </div>
       <div
@@ -125,17 +88,7 @@ export default function (props: IWorkspaceProps) {
         style={{ width: `${style.rightPanelWidth}vw` }}
       >
         {props.question}
-        {globalState.useStepper ? (
-          <div></div>
-        ) : (
-          React.cloneElement(props.repl, {
-            callBack: callBackFromRepl,
-            runState: state.runState,
-            editorInput: state.editorInput,
-            callBackStop: callBackFromReplStop,
-          })
-        )}
-
+        {globalState.useStepper ? <div></div> : props.repl}
       </div>
     </div>
   );

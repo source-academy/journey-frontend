@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   makeStyles,
   withStyles,
@@ -9,10 +9,6 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import IconButton from "@material-ui/core/IconButton";
-import AspectRatioIcon from "@material-ui/icons/AspectRatio";
-import RunePanel from "./Panel";
-import AppBar from "@material-ui/core/AppBar";
 
 //button and content array
 type Props = {
@@ -116,8 +112,6 @@ const TabStyle: React.FC<Props> = (Props) => {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
-  const [state, changeState] = useState(false);
-  const handlePanel = () => changeState(!state);
 
   const buttonList = () => (
     <div>

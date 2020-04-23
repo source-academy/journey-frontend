@@ -3,11 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
 import AceEditor from "react-ace";
 
 import { Store } from "../../reducers/Store";
 import EvalButton from "./EvalButton";
+import Markdown from "./../../utils/Markdown";
 
 import "ace-builds/src-noconflict/mode-javascript"; // replace with mode source in the future
 import "ace-builds/src-noconflict/theme-tomorrow";
@@ -39,7 +39,7 @@ export default function Repl2() {
   }
   const classes = useStyles();
 
-  const runComponent =  (
+  const runComponent = (
     <Card className={classes.root}>
       <CardContent>
         {
@@ -52,14 +52,16 @@ export default function Repl2() {
   );
 
   const componentList = (
-    <div style={{overflow: "scroll", maxHeight: "40vh"}}>
+    <div style={{ overflow: "scroll", maxHeight: "40vh" }}>
       {globalState.replValue
-        .filter((element: React.ReactNode) => element !== "")
-        .map((component: React.ReactNode, i: number) => {
+        .filter((element: string) => element !== "")
+        .map((component: string, i: number) => {
           return (
             <>
               <Card className={classes.root}>
-                {component}
+                {component.split("\n").map((i) => (
+                  <p>{i}</p>
+                ))}
               </Card>
               <Card className={classes.root}>
                 {globalState.run
@@ -71,15 +73,12 @@ export default function Repl2() {
         })}
     </div>
   );
-  const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <div style={{maxHeight: "50vh", overflowY: "scroll"}}>
-      {
-        globalState.run && 
-        globalState.replComponents[0] !== undefined && 
-        runComponent
-      }
+    <div style={{ maxHeight: "50vh", overflowY: "scroll" }}>
+      {globalState.run &&
+        globalState.replComponents[0] !== undefined &&
+        runComponent}
       {componentList}
       <Card className={classes.root}>
         <CardContent>
@@ -97,7 +96,7 @@ export default function Repl2() {
             setOptions={{
               fontFamily: "'Inconsolata', 'Consolas', monospace",
               showLineNumbers: false,
-              showGutter: false
+              showGutter: false,
             }}
           />
         </CardContent>

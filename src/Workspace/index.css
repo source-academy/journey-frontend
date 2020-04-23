@@ -30,7 +30,7 @@
 }
 
 .root-mobile > div {
-  width : 100vw;
+  width: 100vw;
 
   scroll-snap-align: start;
 }
@@ -78,4 +78,3 @@
     visibility: none
   } */
 }
-

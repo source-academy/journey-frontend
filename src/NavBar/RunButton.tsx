@@ -1,17 +1,15 @@
 import React, { useContext } from "react";
-import { Store, IGlobalAction } from "../reducers/Store";
+import { Store } from "../reducers/Store";
 import Runner from "./../library_function/Runner";
 import { runInContext } from "js-slang";
 import createContext from "js-slang/dist/createContext";
-import { Context, Environment } from "js-slang/dist/types";
+import { Context } from "js-slang/dist/types";
 import { Result } from "js-slang/dist/types";
-import { TypeError } from "js-slang/dist/utils/rttc";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { getEvaluationSteps, codify } from "js-slang/dist/stepper/stepper";
+import { codify } from "js-slang/dist/stepper/stepper";
 
 import "./NavBar.css";
-import { stringify } from "querystring";
 
 /**
  * States
@@ -19,13 +17,34 @@ import { stringify } from "querystring";
 
 const RunButton: React.FC = () => {
   const { globalState, dispatch } = useContext(Store);
-  const context: Context = createContext(globalState.source);
+  const source =
+    globalState.source === "Source2"
+      ? 2
+      : globalState.source === "Source3"
+      ? 3
+      : globalState.source === "Source4"
+      ? 4
+      : 1;
+
+  const runTime =
+    globalState.time === "zehntausend"
+      ? 10000
+      : globalState.time === "貳千"
+      ? 2000
+      : globalState.time === "參千"
+      ? 3000
+      : globalState.time === "肆千"
+      ? 4000
+      : globalState.time === "伍千"
+      ? 5000
+      : 1000;
+  const context: Context = createContext(source);
 
   //runInContext takes in (string code, context, {})
   const evaluate = async () => {
     return await runInContext(globalState.playgroundEditorValue, context, {
       scheduler: "preemptive",
-      originalMaxExecTime: 2000,
+      originalMaxExecTime: runTime,
       useSubst: globalState.useStepper,
     });
   };
@@ -45,14 +64,22 @@ const RunButton: React.FC = () => {
     } else if (result.status === "finished") {
       if (globalState.useStepper) {
         const stepperComponents: React.ReactElement[] = result.value.map(
-          (x: any) => <div>{codify(x)}</div>
+          (x: any) => (
+            <div>
+              {codify(x)
+                .split("\n")
+                .map((x) => (
+                  <h5>{x}</h5>
+                ))}
+            </div>
+          )
         );
-        console.log(stepperComponents);
         return dispatch({
           type: "RUNSTEPPER",
           stepperComponents: stepperComponents,
         });
       }
+
       newComponent = <Runner value={result.value} />;
     } else {
       newComponent = <div></div>;
@@ -64,8 +91,8 @@ const RunButton: React.FC = () => {
     });
   };
   return (
-    <div>
-      <a onClick={handleRun}>Run</a>
+    <div className="run" onClick={handleRun}>
+      Run
     </div>
   );
 };

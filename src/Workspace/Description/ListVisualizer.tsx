@@ -23,7 +23,7 @@ class ListVisualizer extends React.Component<{}, IListVisualizerState> {
   public render() {
     // Default text will be hidden by visualizer.js when 'draw_data' is called
     return (
-      <div ref={r => (this.$parent = r)}>
+      <div ref={(r) => (this.$parent = r)}>
         <p id="data-visualizer-default-text">
           The data visualizer visualises data structures.
           <br />
@@ -43,7 +43,6 @@ class ListVisualizer extends React.Component<{}, IListVisualizerState> {
           </a>
           .
         </p>
-        {this.state.loading && <AutorenewIcon />}
       </div>
     );
   }

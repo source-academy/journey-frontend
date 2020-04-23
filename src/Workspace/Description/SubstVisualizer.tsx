@@ -93,7 +93,6 @@ const SubstVisualizer: React.FC<ISubstVisualizerProps> = (props) => {
           />
         }
         <div>{globalState.stepperComponents[step[0] - 1]}</div>
-        {console.log(globalState.stepperComponents[0])}
         {globalState.stepperComponents[0] === undefined ? (
           SubstDefaultText()
         ) : (

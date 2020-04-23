@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 
 import NavBar from "./NavBar";
 import SideBar from "./SideBar";
@@ -10,17 +10,17 @@ import { SideBarContext } from "./SideBarContext";
 
 interface completeNavBarProps {}
 
-const CompleteNavBar: React.FC<completeNavBarProps> = completeNavBarProps => {
+const CompleteNavBar: React.FC<completeNavBarProps> = (completeNavBarProps) => {
   //subscribe to the context
-  const { state, dispatch } = useContext(SideBarContext);
+  const { state } = useContext(SideBarContext);
   let sideBar;
   if (state.sideDrawerState) {
     sideBar = <SideBar />;
   }
 
   return (
-    <div style={{zIndex : 2, height: 50}}>
-      <NavBar/>
+    <div style={{ zIndex: 2, height: 50 }}>
+      <NavBar />
       {sideBar}
     </div>
   );

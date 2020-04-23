@@ -53,7 +53,7 @@ export default function Description() {
   const { globalState, dispatch } = useContext(Store);
   let tabButtonArr: JSX.Element[];
   let tabContentArr: JSX.Element[];
-  if (globalState.source == "Source3" || globalState.source == "Source4") {
+  if (globalState.source === "Source3" || globalState.source === "Source4") {
     tabButtonArr = [
       <AspectRatioIcon />,
       <ImportContactsIcon />,
@@ -68,7 +68,7 @@ export default function Description() {
       <Inspector />,
       <EnvVisualizer />,
     ];
-  } else if (globalState.source == "Source2") {
+  } else if (globalState.source === "Source2") {
     tabButtonArr = [
       <AspectRatioIcon onClick={closeStepper} />,
       <ImportContactsIcon onClick={closeStepper} />,

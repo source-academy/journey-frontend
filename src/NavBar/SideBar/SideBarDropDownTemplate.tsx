@@ -15,11 +15,11 @@ const useStyles = makeStyles({
     width: 250,
     height: 700,
     backgroundColor: "#000000",
-    fontFamily: "sans-serif"
+    fontFamily: "sans-serif",
   },
   fullList: {
-    width: "auto"
-  }
+    width: "auto",
+  },
 });
 
 type Anchor = "top";
@@ -33,26 +33,26 @@ type Props = {
 const SideBarDropDownTemplate: React.FC<Props> = ({
   dropDownType,
   options,
-  sideBarString
+  sideBarString,
 }) => {
   const { globalState, dispatch } = useContext(Store);
 
   const str = sideBarString;
   const change = (input: string): IGlobalAction => {
-    if (str == "source") {
+    if (str === "source") {
       return dispatch({
         type: dropDownType,
-        source: input
+        source: input,
       });
-    } else if (str == "library") {
+    } else if (str === "library") {
       return dispatch({
         type: dropDownType,
-        library: input
+        library: input,
       });
     } else {
       return dispatch({
         type: dropDownType,
-        language: input
+        language: input,
       });
     }
   };
@@ -60,7 +60,7 @@ const SideBarDropDownTemplate: React.FC<Props> = ({
   //drop down
   const classes = useStyles();
   const [state, setState] = React.useState({
-    top: false
+    top: false,
   });
   const toggleDrawer = (anchor: Anchor, open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
@@ -79,14 +79,14 @@ const SideBarDropDownTemplate: React.FC<Props> = ({
   const list = (anchor: Anchor) => (
     <div
       className={clsx(classes.list, {
-        [classes.fullList]: anchor === "top" || anchor === "bottom"
+        [classes.fullList]: anchor === "top" || anchor === "bottom",
       })}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {options.map(text => (
+        {options.map((text) => (
           <ListItem button key={text} onClick={() => change(text)}>
             <ListItemText primary={text} style={{ color: "white" }} />
           </ListItem>
@@ -97,15 +97,15 @@ const SideBarDropDownTemplate: React.FC<Props> = ({
 
   return (
     <div>
-      {(["top"] as Anchor[]).map(anchor => (
+      {(["top"] as Anchor[]).map((anchor) => (
         <React.Fragment key={anchor}>
           <Button
             onClick={toggleDrawer(anchor, true)}
             style={{ color: "white" }}
           >
-            {str == "source"
+            {str === "source"
               ? globalState.source
-              : str == "library"
+              : str === "library"
               ? globalState.library
               : globalState.language}
           </Button>

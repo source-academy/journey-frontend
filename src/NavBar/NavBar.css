@@ -41,6 +41,15 @@
   text-decoration: none;
 }
 
+.run {
+  color: white;
+  text-decoration: none;
+}
+
+.run:hover {
+  color: #c0c0c0;
+}
+
 .navBar_navigation-items a:hover,
 .navBar_navigation-items a:active {
   color: #c0c0c0;

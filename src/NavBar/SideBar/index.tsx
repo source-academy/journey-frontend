@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 
 import "./index.css";
 import SideBarDropDownTemplate from "./SideBarDropDownTemplate";
@@ -15,7 +15,7 @@ let libraryOptions: string[] = [
   "SOUNDS",
   "BINARYTREES",
   "PIX&FLIX",
-  "MACHINELEARNING, ALL"
+  "MACHINELEARNING, ALL",
 ];
 let languageOptions: string[] = [
   "Source",
@@ -23,10 +23,10 @@ let languageOptions: string[] = [
   "Java",
   "Typescript",
   "Javascript",
-  "Python"
+  "Python",
 ];
 
-const SideBar: React.FC<sideBarProps> = sideBarProps => {
+const SideBar: React.FC<sideBarProps> = (sideBarProps) => {
   return (
     <div>
       <nav className="side-drawer">

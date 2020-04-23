@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
-import { Store, IGlobalAction } from "../../reducers/Store";
-import LabelImportantIcon from "@material-ui/icons/LabelImportant";
+import { Store } from "../../reducers/Store";
+
 import IconButton from "@material-ui/core/IconButton";
 import Runner from "../../library_function/Runner";
 import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
 import { runInContext } from "js-slang";
 import { Result } from "js-slang/dist/types";
 import createContext from "js-slang/dist/createContext";
-import { Context, Environment } from "js-slang/dist/types";
+import { Context } from "js-slang/dist/types";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 

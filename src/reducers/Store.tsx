@@ -1,6 +1,5 @@
 import React from "react";
 import { createContext } from "react";
-import { ICollabEditorProps } from "../Workspace/Editor";
 import {
   INIT_INVITE,
   FINISH_INVITE,
@@ -10,14 +9,14 @@ import {
 
 const defaultSource: string = "Source";
 const defaultLanguage: string = "Language";
-const defaultLibaray: string = "Library";
+const defaultRunTime: string = "RunningTime";
 const defaultValue: string = "// Type your program in here\n\n";
 const defaultReplValue: string[] = [""];
 
 export interface IGlobalState {
   editorSessionId: string | undefined;
   source: string | undefined;
-  library: string | undefined;
+  time: string | undefined;
   language: string | undefined;
   playgroundEditorValue: string | undefined;
   replValue: string[];
@@ -28,14 +27,15 @@ export interface IGlobalState {
   stepperComponents: React.ReactElement[] | undefined;
   websocketStatus?: number;
   sharedbAceInitValue?: string;
-  sharedbAceIsInviting?: boolean;}
+  sharedbAceIsInviting?: boolean;
+}
 
 // Action Interfaces
 export interface IGlobalAction {
-  editorSessionId: string
+  editorSessionId: string;
   type: String;
   source?: string;
-  library?: string;
+  time?: string;
   language?: string;
   playgroundEditorValue?: string;
   replValue?: string;
@@ -46,11 +46,9 @@ export interface IGlobalAction {
   websocketStatus: number;
 }
 
-
-
 const initialState: IGlobalState = {
   source: defaultSource,
-  library: defaultLibaray,
+  time: defaultRunTime,
   language: defaultLanguage,
   playgroundEditorValue: defaultValue,
   replValue: defaultReplValue,
@@ -60,8 +58,8 @@ const initialState: IGlobalState = {
   useStepper: false,
   stepperComponents: [],
   // collab editing
-  editorSessionId: '',
-  sharedbAceInitValue: '',
+  editorSessionId: "",
+  sharedbAceInitValue: "",
   sharedbAceIsInviting: false,
   websocketStatus: 0,
 };
@@ -75,20 +73,20 @@ function reducer(
 ): IGlobalState {
   switch (action.type) {
     case SET_EDITOR_SESSION_ID:
-      console.log("action", action.editorSessionId)
+      console.log("action", action.editorSessionId);
       return {
         ...globalState,
-        editorSessionId: action.editorSessionId
-      }
+        editorSessionId: action.editorSessionId,
+      };
     case "CHANGE_SOURCE":
       return {
         ...globalState,
         source: action.source,
       };
-    case "CHANGE_LIBRARY":
+    case "CHANGE_TIME":
       return {
         ...globalState,
-        library: action.library,
+        time: action.time,
       };
     case "CHANGE_LANGUAGE":
       return {
@@ -101,11 +99,10 @@ function reducer(
         playgroundEditorValue: action.playgroundEditorValue,
       };
     case "UPDATE_AND_EVAL":
-      var l: number = globalState.replValue.length;
+      console.log(action.replValue);
       const value: string =
         action.replValue === undefined ? "" : action.replValue;
       globalState.replValue.push(value);
-      console.log("push in " + value);
       return {
         ...globalState,
         replValue: globalState.replValue,
@@ -152,37 +149,36 @@ function reducer(
     case INIT_INVITE:
       return {
         ...globalState,
-          sharedbAceInitValue: action.playgroundEditorValue,
-          sharedbAceIsInviting: true
-        }
-      case FINISH_INVITE:
-        console.log("STOP invite")
-        return {
-          ...globalState,
-            sharedbAceIsInviting: false
-          }
-          case SET_EDITOR_SESSION_ID:
-            return {
-              ...globalState,
-                editorSessionId: action.editorSessionId
-              }
- case SET_WEBSOCKET_STATUS:
-        return {
-          ...globalState,
-            websocketStatus: action.websocketStatus
-          }
+        sharedbAceInitValue: action.playgroundEditorValue,
+        sharedbAceIsInviting: true,
+      };
+    case FINISH_INVITE:
+      console.log("STOP invite");
+      return {
+        ...globalState,
+        sharedbAceIsInviting: false,
+      };
+    case SET_EDITOR_SESSION_ID:
+      return {
+        ...globalState,
+        editorSessionId: action.editorSessionId,
+      };
+    case SET_WEBSOCKET_STATUS:
+      return {
+        ...globalState,
+        websocketStatus: action.websocketStatus,
+      };
 
     default:
       throw new Error();
   }
-};
-
+}
 
 export function StoreProvider(props: any): JSX.Element {
   const [globalState, dispatch] = React.useReducer(reducer, initialState);
 
   return (
-    <Store.Provider value={{ globalState, dispatch}}>
+    <Store.Provider value={{ globalState, dispatch }}>
       {props.children}
     </Store.Provider>
   );
