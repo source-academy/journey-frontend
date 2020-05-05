@@ -8,6 +8,7 @@ import SourceDropDown from "./DropDownTemplate";
 import SessionControl from "./SessionControl";
 import RunButton from "./RunButton";
 import PhoneRunButton from "./PhoneRunButton";
+import logo from "./logo.png";
 
 import "./NavBar.css";
 import Grid from "@material-ui/core/Grid";
@@ -61,7 +62,7 @@ const NavBar: React.FC = () => {
           <Grid item>
             <div className="listPlusLogo">
               <div>
-                <img src="/images/logo.png" alt="/" className="navBar_logo" />
+                <img src={logo} alt="/" className="navBar_logo" />
               </div>
 
               <div className="navBar_navigation-items">

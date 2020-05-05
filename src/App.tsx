@@ -14,7 +14,7 @@ function App() {
         <StoreProvider>
           <BrowserRouter>
             <Switch>
-              <Route exact path="/" component={Playground} />
+              <Route exact path="/journey-frontend" component={Playground} />
               {/* <Route exact path="/mission" component={MissionOverview} />
               <Route path="/mission/:missionID/:page" component={Mission} />
               <Route path="/playground" component={Playground} />
