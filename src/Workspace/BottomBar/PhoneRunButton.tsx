@@ -42,9 +42,16 @@ const PhoneRunButton: React.FC = () => {
     } else if (result.status === "finished") {
       if (globalState.useStepper) {
         const stepperComponents: React.ReactElement[] = result.value.map(
-          (x: any) => <div>{codify(x)}</div>
+          (x: any) => (
+            <div>
+              {codify(x)
+                .split("\n")
+                .map((x) => (
+                  <h5>{x}</h5>
+                ))}
+            </div>
+          )
         );
-        console.log(stepperComponents);
         return dispatch({
           type: "RUNSTEPPER",
           stepperComponents: stepperComponents,

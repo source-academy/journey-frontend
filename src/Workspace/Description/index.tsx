@@ -14,7 +14,7 @@ import EnvVisualizer from "./EnvVisualizer";
 import Inspector from "./Inspector";
 import TabStyle from "./TabStyle";
 import AspectRatioIcon from "@material-ui/icons/AspectRatio";
-import RunePanel from "./Panel";
+import Panel from "./Panel";
 import { Store, IGlobalAction } from "../../reducers/Store";
 
 const useStyles = makeStyles({
@@ -55,41 +55,41 @@ export default function Description() {
   let tabContentArr: JSX.Element[];
   if (globalState.source === "Source3" || globalState.source === "Source4") {
     tabButtonArr = [
-      <AspectRatioIcon />,
       <ImportContactsIcon />,
+      <AspectRatioIcon />,
       <VisibilityIcon />,
       <SearchIcon />,
       <PublicIcon />,
     ];
     tabContentArr = [
-      <RunePanel />,
       <IntroductionTab />,
+      <Panel />,
       <ListVisualizer />,
       <Inspector />,
       <EnvVisualizer />,
     ];
   } else if (globalState.source === "Source2") {
     tabButtonArr = [
-      <AspectRatioIcon onClick={closeStepper} />,
       <ImportContactsIcon onClick={closeStepper} />,
+      <AspectRatioIcon onClick={closeStepper} />,
       <VisibilityIcon onClick={closeStepper} />,
       <SettingsEthernetIcon onClick={toggleStepper} />,
     ];
     tabContentArr = [
-      <RunePanel />,
       <IntroductionTab />,
+      <Panel />,
       <ListVisualizer />,
       <SubstVisualizer content={["function", "f(x)"]} />,
     ];
   } else {
     tabButtonArr = [
-      <AspectRatioIcon onClick={closeStepper} />,
       <ImportContactsIcon onClick={closeStepper} />,
+      <AspectRatioIcon onClick={closeStepper} />,
       <SettingsEthernetIcon onClick={toggleStepper} />,
     ];
     tabContentArr = [
-      <RunePanel />,
       <IntroductionTab />,
+      <Panel />,
       <SubstVisualizer content={["function", "f(x)"]} />,
     ];
   }

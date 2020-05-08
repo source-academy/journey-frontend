@@ -16,6 +16,7 @@ import CardContent from "@material-ui/core/CardContent";
  */
 interface evalButtonProps {
   code: string;
+  setHistory: (x: number) => void;
 }
 const context: Context = createContext(4);
 
@@ -33,7 +34,9 @@ const EvalButton: React.FC<evalButtonProps> = (props) => {
   }
 
   const evaluate = async () => {
+    //handleRun update the code to global container first
     handleRun();
+    props.setHistory(globalState.replValue.length - 1);
     const code: string = conbineCode();
     return await runInContext(code, context, {
       scheduler: "preemptive",

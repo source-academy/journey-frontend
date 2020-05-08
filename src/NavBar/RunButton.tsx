@@ -27,15 +27,15 @@ const RunButton: React.FC = () => {
       : 1;
 
   const runTime =
-    globalState.time === "zehntausend"
+    globalState.time === "10000"
       ? 10000
-      : globalState.time === "貳千"
+      : globalState.time === "2000"
       ? 2000
-      : globalState.time === "參千"
+      : globalState.time === "3000"
       ? 3000
-      : globalState.time === "肆千"
+      : globalState.time === "4000"
       ? 4000
-      : globalState.time === "伍千"
+      : globalState.time === "5000"
       ? 5000
       : 1000;
   const context: Context = createContext(source);

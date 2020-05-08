@@ -1,5 +1,7 @@
 import React from "react";
 
+import SessionControl from "./../SessionControl";
+
 import "./index.css";
 import SideBarDropDownTemplate from "./SideBarDropDownTemplate";
 /**
@@ -39,27 +41,13 @@ const SideBar: React.FC<sideBarProps> = (sideBarProps) => {
             />
           </li>
           <li>
-            <SideBarDropDownTemplate
-              dropDownType="CHANGE_LIBRARY"
-              options={libraryOptions}
-              sideBarString={"library"}
-            />
+            <a>TextBook</a>
           </li>
           <li>
-            <SideBarDropDownTemplate
-              dropDownType="CHANGE_LANGUAGE"
-              options={languageOptions}
-              sideBarString={"language"}
-            />
+            <SessionControl />
           </li>
           <li>
-            <a href="/">TextBook</a>
-          </li>
-          <li>
-            <a href="/">Run</a>
-          </li>
-          <li>
-            <a href="/">Share</a>
+            <a>Share</a>
           </li>
         </ul>
       </nav>

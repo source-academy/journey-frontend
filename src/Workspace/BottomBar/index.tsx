@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -9,6 +9,7 @@ import SportsEsportsIcon from "@material-ui/icons/SportsEsports";
 import DeveloperModeIcon from "@material-ui/icons/DeveloperMode";
 import TextsmsIcon from "@material-ui/icons/Textsms";
 import PhoneRunButton from "./PhoneRunButton";
+import { Store } from "./../../reducers/Store";
 
 interface completeNavBarProps {}
 
@@ -37,12 +38,13 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const BottomBar: React.FC<completeNavBarProps> = (completeNavBarProps) => {
+  const { globalState } = useContext(Store);
   const classes = useStyles();
   return (
     <>
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <div className={classes.flex} />
+          {/*<div className={classes.flex} />
           <Link href="#main-editor" className={classes.flex}>
             <IconButton className={classes.buttons}>
               <SportsEsportsIcon />
@@ -57,9 +59,12 @@ const BottomBar: React.FC<completeNavBarProps> = (completeNavBarProps) => {
             <IconButton className={classes.buttons}>
               <TextsmsIcon />
             </IconButton>
-          </Link>
+  </Link>*/}
           <div className={classes.flex} />
-          <Link href="#repl" className={classes.flex}>
+          <Link
+            href={globalState.useStepper ? "#question" : "#repl"}
+            className={classes.flex}
+          >
             <Fab
               color="secondary"
               aria-label="add"

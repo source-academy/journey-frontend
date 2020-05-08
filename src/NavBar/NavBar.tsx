@@ -18,14 +18,7 @@ import Grid from "@material-ui/core/Grid";
  */
 
 let sourceOptions: string[] = ["Source1", "Source2", "Source3", "Source4"];
-let timeOptions: string[] = [
-  "壹千",
-  "貳千",
-  "參千",
-  "肆千",
-  "伍千",
-  "zehntausend",
-];
+let timeOptions: string[] = ["1000", "2000", "3000", "4000", "5000", "10000"];
 
 const NavBar: React.FC = () => {
   const { state, dispatch } = useContext(SideBarContext);
